@@ -4,6 +4,16 @@ using namespace std;
 
 int main(){	
 
+	float PrevBalance, Interest, Payment;
+	int year = 1;
+	
+	cout << "Enter initial loan: ";
+	cin >> PrevBalance;
+	cout << "Enter interest rate per year (%): ";
+	cin >> Interest;
+	cout << "Enter amount yeraly paying: ";
+	cin >> Payment;
+
 	//use 'setw' to set width of table and 'left' to set left-alignment
 	//you can change input argument of 'setw()' to see the effect
 	//Try to change from 'left' to 'right' and see the effect
@@ -17,14 +27,28 @@ int main(){
 	
 	//use 'fixed' and 'setprecision' to fix the number of decimal digits for displaying
 	//you can change input argument of 'setprecision()' to see the effect
-	cout << fixed << setprecision(2); 
-	cout << setw(13) << left << 1; 
-	cout << setw(13) << left << 1000.0;
-	cout << setw(13) << left << 50.0;
-	cout << setw(13) << left << 1050.0;
-	cout << setw(13) << left << 100.0;
-	cout << setw(13) << left << 950.0;
-	cout << "\n";	
+	do {
+	    float netInterest = PrevBalance * (Interest/100);
+	    
+	    cout << fixed << setprecision(2); 
+    	cout << setw(13) << left << year; 
+    	cout << setw(13) << left << PrevBalance;
+    	cout << setw(13) << left << netInterest;
+    	
+    	PrevBalance += netInterest;
+    	cout << setw(13) << left << PrevBalance; // total
+    	
+    	Payment = PrevBalance < Payment ? PrevBalance : Payment;
+    	cout << setw(13) << left << Payment;
+    	
+    	PrevBalance -= Payment;
+    	PrevBalance = PrevBalance < 0 ? 0 : PrevBalance;
+    	cout << setw(13) << left << PrevBalance; // new balance
+    	cout << "\n";
+    	
+    	year++;
+    	
+	} while (PrevBalance > 0);
 	
 	return 0;
 }
